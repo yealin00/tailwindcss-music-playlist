@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Dashboard - 나만의 플레이리스트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+
+      body {
+        font-family: "Noto Sans KR", sans-serif;
+      }
+
+      .album-shadow {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        .duration-300 {
+          transition-duration: 300ms;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 min-h-screen transition"
+  >
+    <!-- 예린: Navigation -->
+    <nav
+      class="bg-black bg-opacity-40 backdrop-blur-md border-white border-opacity-1"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-white"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"
+                />
+              </svg>
+            </div>
+            <span class="text-white text-xl font-bold">MusicDash</span>
+          </div>
+
+          <div class="hidden md:flex items-center space-x-6">
+            <a href="#" class="text-white hover:text-pink-400 transition">홈</a>
+            <a href="#" class="text-gray-300 hover:text-white transition"
+              >탐색</a
+            >
+            <a href="#" class="text-gray-300 hover:text-white transition"
+              >라이브러리</a
+            >
+          </div>
+
+          <button class="md:hidden text-white">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg-px-8 py-8 mb-[100px]">
+      <!-- Header Section -->
+      <div class="mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">
+          안녕하세요! 👋
+        </h1>
+        <p class="text-gray-300 text-lg">오늘은 어떤 음악을 들어볼까요?</p>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        <div
+          class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-white border-opacity-30 hover:bg-opacity-20 transition"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-200 text-sm mb-1">총 재생시간</p>
+              <p class="text-white text-2xl font-bold">127시간</p>
+            </div>
+            <div
+              class="w-12 h-12 bg-pink-600 bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-pink-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                <path
+                  fill-rule="evenodd"
+                  d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-white border-opacity-30 hover:bg-opacity-20 transition"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-200 text-sm mb-1">좋아하는 곡</p>
+              <p class="text-white text-2xl font-bold">342곡</p>
+            </div>
+            <div
+              class="w-12 h-12 bg-purple-600 bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-purple-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-white border-opacity-30 hover:bg-opacity-20 transition"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-200 text-sm mb-1">플레이리스트</p>
+              <p class="text-white text-2xl font-bold">18개</p>
+            </div>
+            <div
+              class="w-12 h-12 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-blue-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                <path
+                  fill-rule="evenodd"
+                  d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 border border-white border-opacity-20 hover:bg-opacity-20 transition"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-300 text-sm mb-1">팔로잉 아티스트</p>
+              <p class="text-white text-2xl font-bold">56명</p>
+            </div>
+            <div
+              class="w-12 h-12 bg-green-500 bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <svg
+                class="w-6 h-6 text-green-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 
+                  0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 
+                  0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recently Played -->
+      <section class="mb-10">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl md:text-3xl font-bold text-white">
+            최근 재생한 음악
+          </h2>
+          <button
+            class="text-sm font-medium felx items-center justify-between hover:text-pink-300 text-pink-400 transition"
+          >
+            모두 보기
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <!-- Album Card 1 -->
+          <div class="group cursor-pointer">
+            <div class="relative mb-4 rounded-lg overflow-hidden album-shadow">
+              <div
+                class="relative aspect-square bg-gradient-to-br from-pink-400 to-pink-900 group"
+              ></div>
+              <button
+                class="absolute bottom-2 right-2 w-12 h-12 flex items-center justify-center bg-pink-500 rounded-full opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-xl"
+              >
+                <svg
+                  class="w-6 h-6 text-white ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <h3 class="text-white font-medium truncate mb-1">
+              Midnight Dreams
+            </h3>
+            <p class="text-gray-400 text-sm truncate">Luna Park</p>
+          </div>
+
+          <!-- Album Card 2 -->
+          <div class="group cursor-pointer">
+            <div class="relative mb-4 rounded-lg overflow-hidden album-shadow">
+              <div
+                class="relative aspect-square bg-gradient-to-br from-blue-400 to-blue-900 group"
+              ></div>
+              <button
+                class="absolute bottom-2 right-2 w-12 h-12 flex items-center justify-center bg-pink-500 rounded-full opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-xl"
+              >
+                <svg
+                  class="w-6 h-6 text-white ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <h3 class="text-white font-medium truncate mb-1">Ocean Waves</h3>
+            <p class="text-gray-400 text-sm truncate">The Mariners</p>
+          </div>
+
+          <!-- Album Card 3 -->
+          <div class="group cursor-pointer">
+            <div class="relative mb-4 rounded-lg overflow-hidden album-shadow">
+              <div
+                class="relative aspect-square bg-gradient-to-br from-orange-400 to-orange-900 group"
+              ></div>
+              <button
+                class="absolute bottom-2 right-2 w-12 h-12 flex items-center justify-center bg-pink-500 rounded-full opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-xl"
+              >
+                <svg
+                  class="w-6 h-6 text-white ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <h3 class="text-white font-medium truncate mb-1">Summer Vibes</h3>
+            <p class="text-gray-400 text-sm truncate">Tropical Beats</p>
+          </div>
+
+          <!-- Album Card 4 -->
+          <div class="group cursor-pointer">
+            <div class="relative mb-4 rounded-lg overflow-hidden album-shadow">
+              <div
+                class="relative aspect-square bg-gradient-to-br from-green-400 to-green-900 group"
+              ></div>
+              <button
+                class="absolute bottom-2 right-2 w-12 h-12 flex items-center justify-center bg-pink-500 rounded-full opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-xl"
+              >
+                <svg
+                  class="w-6 h-6 text-white ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <h3 class="text-white font-medium truncate mb-1">Forest Echoes</h3>
+            <p class="text-gray-400 text-sm truncate">Nature Sounds</p>
+          </div>
+
+          <!-- Album Card 5 -->
+          <div class="group cursor-pointer">
+            <div class="relative mb-4 rounded-lg overflow-hidden album-shadow">
+              <div
+                class="relative aspect-square bg-gradient-to-br from-purple-400 to-purple-900 group"
+              ></div>
+              <button
+                class="absolute bottom-2 right-2 w-12 h-12 flex items-center justify-center bg-pink-500 rounded-full opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-xl"
+              >
+                <svg
+                  class="w-6 h-6 text-white ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <h3 class="text-white font-medium truncate mb-1">
+              Electric Nights
+            </h3>
+            <p class="text-gray-400 text-sm truncate">Neon City</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 연화: My Playlists -->
+      <section class="mb-10">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-white text-2xl md:text-3xl font-bold">
+            나의 플레이 리스트
+          </h2>
+          <button
+            class="bg-pink-500 hover:bg-pink-600 rounded-full flex items-center space-x-2 px-4 py-2"
+          >
+            <svg
+              class="w-4 h-4 text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span class="text-white text-[0.875rem] text-center"
+              >새 플레이 리스트</span
+            >
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Playlist Card 1 -->
+          <div
+            class="bg-white bg-opacity-10 border border-white border-opacity-20 hover:bg-opacity-15 rounded-xl p-6 overflow-hidden transition cursor-pointer group"
+          >
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center space-x-4">
+                <div
+                  class="bg-gradient-to-br from-pink-500 to-purple-800 rounded-lg flex items-center justify-center w-16 h-16"
+                >
+                  <svg
+                    class="w-8 h-8 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"
+                    />
+                  </svg>
+                </div>
+                <div class="truncate">
+                  <h3 class="mb-1 text-white font-bold text-lg">운동할 때</h3>
+                  <p class="text-gray-400 text-sm">45곡 • 3시간 12분</p>
+                </div>
+              </div>
+              <button
+                class="opacity-0 group-hover:opacity-100 transition cursor-pointer"
+              >
+                <svg
+                  class="w-6 h-6 text-gray-400 hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="bg-pink-500 bg-opacity-20 rounded-full px-3 py-1 text-pink-300 text-xs cursor-pointer"
+                >팝</span
+              >
+              <span
+                class="bg-purple-500 bg-opacity-20 rounded-full px-3 py-1 text-purple-300 text-xs cursor-pointer"
+                >EDM</span
+              >
+            </div>
+            <div class="bg-gray-700 bg-opacity-50 rounded-full w-full h-2">
+              <div
+                class="bg-gradient-to-r from-pink-500 to-purple-600 rounded-full h-2"
+                style="width: 75%"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Playlist Card 2 -->
+          <div
+            class="bg-white bg-opacity-10 border border-white border-opacity-20 hover:bg-opacity-15 rounded-xl p-6 overflow-hidden transition cursor-pointer group"
+          >
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center space-x-4">
+                <div
+                  class="bg-gradient-to-br from-blue-500 to-cyan-700 rounded-lg flex items-center justify-center w-16 h-16"
+                >
+                  <svg
+                    class="w-8 h-8 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div class="truncate">
+                  <h3 class="mb-1 text-white font-bold text-lg">집중 모드</h3>
+                  <p class="text-gray-400 text-sm">32곡 • 2시간 8분</p>
+                </div>
+              </div>
+              <button
+                class="opacity-0 group-hover:opacity-100 transition cursor-pointer"
+              >
+                <svg
+                  class="w-6 h-6 text-gray-400 hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="bg-blue-500 bg-opacity-20 rounded-full px-3 py-1 text-blue-300 text-xs cursor-pointer"
+                >클래식</span
+              >
+              <span
+                class="bg-cyan-500 bg-opacity-20 rounded-full px-3 py-1 text-cyan-300 text-xs cursor-pointer"
+                >앰비언트</span
+              >
+            </div>
+            <div class="bg-gray-700 bg-opacity-50 rounded-full w-full h-2">
+              <div
+                class="bg-gradient-to-r from-blue-500 rounded-full to-cyan-600 h-2"
+                style="width: 45%"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Playlist Card 3 -->
+          <div
+            class="bg-white bg-opacity-10 border border-white border-opacity-20 hover:bg-opacity-15 rounded-xl p-6 overflow-hidden transition cursor-pointer group"
+          >
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center space-x-4">
+                <div
+                  class="bg-gradient-to-br from-orange-400 to-red-500 rounded-lg flex items-center justify-center w-16 h-16"
+                >
+                  <svg
+                    class="w-8 h-8 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div class="truncate">
+                  <h3 class="mb-1 text-white font-bold text-lg">로맨틱</h3>
+                  <p class="text-gray-400 text-sm">28곡 • 1시간 52분</p>
+                </div>
+              </div>
+              <button
+                class="opacity-0 group-hover:opacity-100 transition cursor-pointer"
+              >
+                <svg
+                  class="w-6 h-6 text-gray-400 hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span
+                class="bg-orange-500 bg-opacity-20 rounded-full px-3 py-1 text-orange-300 text-xs cursor-pointer"
+                >발라드</span
+              >
+              <span
+                class="bg-red-500 bg-opacity-20 rounded-full px-3 py-1 text-red-300 text-xs cursor-pointer"
+                >R&B</span
+              >
+            </div>
+            <div class="bg-gray-700 bg-opacity-50 rounded-full w-full h-2">
+              <div
+                class="bg-gradient-to-r from-orange-500 to-red-600 rounded-full h-2"
+                style="width: 60%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 연화: Top Songs This Week -->
+      <section>
+        <h2 class="mb-6 text-white text-2xl md:text-3xl font-bold">
+          이번 주 인기곡
+        </h2>
+
+        <div
+          class="bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-xl overflow-hidden"
+        >
+          <!-- Song Item 1 -->
+          <div
+            class="flex items-center justify-between p-4 hover:bg-white hover:bg-opacity-5 transition group"
+          >
+            <div class="flex items-center space-x-4">
+              <span class="w-8 text-gray-400 text-lg font-bold text-center"
+                >1</span
+              >
+              <div
+                class="bg-gradient-to-br from-pink-400 to-purple-600 rounded flex-shrink-0 w-12 h-12"
+              ></div>
+              <div class="flex-1 min-w-0 truncate">
+                <h4 class="text-white font-medium">Starlight Symphony</h4>
+                <p class="text-gray-400 text-sm">Luna Park</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-6">
+              <span class="text-gray-400 text-sm hidden sm:block">3:45</span>
+              <button class="">
+                <svg
+                  class="w-5 h-5 text-gray-400 hover:text-pink-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button class="opacity-0 group-hover:opacity-100 transition">
+                <svg
+                  class="w-5 h-5 text-pink-400 hover:text-pink-300 transition"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Song Item 2 -->
+          <div
+            class="flex items-center justify-between p-4 hover:bg-white hover:bg-opacity-5 transition group"
+          >
+            <div class="flex items-center space-x-4">
+              <span class="w-8 text-gray-400 text-lg font-bold text-center"
+                >2</span
+              >
+              <div
+                class="bg-gradient-to-br from-blue-400 to-cyan-600 flex-shrink-0 w-12 h-12"
+              ></div>
+              <div class="flex-1 min-w-0 truncate">
+                <h4 class="text-white font-medium">Digital Dreams</h4>
+                <p class="text-gray-400 text-sm">Neon City</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-6">
+              <span class="text-gray-400 text-sm hidden sm:block">4:12</span>
+              <button>
+                <svg
+                  class="w-5 h-5 text-pink-400 transition"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button class="opacity-0 group-hover:opacity-100 transition">
+                <svg
+                  class="w-5 h-5 text-pink-400 hover:text-pink-300 transition"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Song Item 3 -->
+          <div
+            class="flex items-center justify-between p-4 hover:bg-white hover:bg-opacity-5 transition group"
+          >
+            <div class="flex items-center space-x-4">
+              <span class="w-8 text-gray-400 text-lg font-bold text-center"
+                >3</span
+              >
+              <div
+                class="bg-gradient-to-br from-orange-400 to-red-600 rounded flex-shrink-0 w-12 h-12"
+              ></div>
+              <div class="flex-1 min-w-0 truncate">
+                <h4 class="text-white font-medium">Sunset Boulevard</h4>
+                <p class="text-gray-400 text-sm">Tropical Beats</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-6">
+              <span class="text-gray-400 text-sm hidden sm:block">3:28</span>
+              <button>
+                <svg
+                  class="w-5 h-5 text-gray-400 hover:text-pink-400 transition"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button class="opacity-0 group-hover:opacity-100 transition">
+                <svg
+                  class="w-5 h-5 text-pink-400 hover:text-pink-300 transition"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Song Item 4 -->
+          <div
+            class="flex items-center justify-between p-4 hover:bg-white hover:bg-opacity-5 transition group"
+          >
+            <div class="flex items-center space-x-4">
+              <span class="w-8 text-gray-400 text-lg font-bold text-center"
+                >4</span
+              >
+              <div
+                class="bg-gradient-to-br from-green-400 to-emerald-600 rounded flex-shrink-0 w-12 h-12"
+              ></div>
+              <div class="flex-1 min-w-0 truncate">
+                <h4 class="text-white font-medium">Morning Breeze</h4>
+                <p class="text-gray-400 text-sm">Nature Sounds</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-6">
+              <span class="text-gray-400 text-sm hidden sm:block">5:03</span>
+              <button>
+                <svg
+                  class="w-5 h-5 text-pink-400 transition"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button class="opacity-0 group-hover:opacity-100 transition">
+                <svg
+                  class="w-5 h-5 text-pink-400 hover:text-pink-300 transition"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Song Item 5 -->
+          <div
+            class="flex items-center justify-between p-4 hover:bg-white hover:bg-opacity-5 transition group"
+          >
+            <div class="flex items-center space-x-4">
+              <span class="w-8 text-gray-400 text-lg font-bold text-center"
+                >5</span
+              >
+              <div
+                class="bg-gradient-to-br from-purple-400 to-indigo-600 rounded flex-shrink-0 w-12 h-12"
+              ></div>
+              <div class="flex-1 min-w-0 truncate">
+                <h4 class="text-white font-medium">Cosmic Journey</h4>
+                <p class="text-gray-400 text-sm">Space Travelers</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-6">
+              <span class="text-gray-400 text-sm hidden sm:block">4:35</span>
+              <button class="">
+                <svg
+                  class="w-5 h-5 text-gray-400 hover:text-pink-400 transition"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                class="opacity-0 group-hover:opacity-100 transition sm-none"
+              >
+                <svg
+                  class="w-5 h-5 text-pink-400 hover:text-pink-300 transition"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 연화: Fixed Player Bar -->
+    <div
+      class="fixed bottom-0 left-0 w-full bg-black bg-opacity-90 backdrop-blur-md border-t border-white border-opacity-10"
+    >
+      <div class="mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Currently Playing -->
+          <div class="flex items-center space-x-4 flex-1">
+            <div
+              class="bg-gradient-to-br from-pink-400 to-purple-600 rounded flex-shrink-0 w-14 h-14"
+            ></div>
+            <div class="">
+              <h4 class="text-white text-sm font-medium truncate">
+                Starlight Symphony
+              </h4>
+              <p class="text-gray-400 text-xs truncate">Luna Park</p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-pink-400 transition hidden sm:block"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Player Controls -->
+          <div class="flex flex-col items-center flex-1 max-w-2xl">
+            <div class="flex items-center space-x-6 mb-2">
+              <button class="text-gray-400 hover:text-white transition">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M8.445 14.832A1 1 0 0010 14v-2.798l5.445 3.63A1 1 0 0017 14V6a1 1 0 00-1.555-.832L10 8.798V6a1 1 0 00-1.555-.832l-6 4a1 1 0 000 1.664l6 4z"
+                  />
+                </svg>
+              </button>
+              <button
+                class="bg-white rounded-full flex items-center justify-center w-10 h-10 transition"
+              >
+                <svg
+                  class="w-5 h-5 text-black ml-0.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"
+                  />
+                </svg>
+              </button>
+              <button class="text-gray-400 hover:text-white transition">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M4.555 5.168A1 1 0 003 6v8a1 1 0 001.555.832L10 11.202V14a1 1 0 001.555.832l6-4a1 1 0 000-1.664l-6-4A1 1 0 0010 6v2.798l-5.445-3.63z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="flex items-center space-x-3 w-full">
+              <span class="text-gray-400 text-xs">1:23</span>
+              <div class="bg-gray-700 rounded-full flex-1 h-1 overflow-hidden">
+                <div
+                  class="bg-gradient-to-r from-pink-400 to-purple-600 rounded-full h-full"
+                  style="width: 75%"
+                ></div>
+              </div>
+              <span class="text-gray-400 text-xs">3:45</span>
+            </div>
+          </div>
+
+          <!-- md-none, Volume & Options -->
+          <div class="hidden lg:flex items-center justify-end space-x-4 flex-1">
+            <button class="text-gray-400 hover:text-white transition">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <div
+              class="bg-gray-700 rounded-full w-24 h-1 overflow-hidden cursor-pointer"
+            >
+              <div
+                class="bg-white rounded-full h-full"
+                style="width: 70%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
